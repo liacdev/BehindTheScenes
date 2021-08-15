@@ -1,0 +1,2 @@
+# BehindTheScenes
+JavaScript fundamentals exercises 
