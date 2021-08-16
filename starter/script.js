@@ -18,7 +18,7 @@ function calcAge(birthYear) {
       const firstName = 'Doive'; // Declare a variable again
       const str = `Oh, and you're a millennial, ${firstName}`; // Const is block scoped
       // JS goes and gets the first firstName that it finds
-      console.log(str);
+      console.log('Line 21: ' + str);
       function add(a, b) {
         return a + b;
       }
@@ -27,11 +27,11 @@ function calcAge(birthYear) {
     }
 
     // console.log(str);  // This will not work out here because const is block scoped
-    console.log(millennial); // This will work because var is function scoped
+    console.log('Line 30: ' + millennial); // This will work because var is function scoped
     // add(2, 3);  // Will not work because function add() is scoped to the block in which it was defined
     // Only true for strict mode, this will work if strict mode turned off
     // console.log(add(2, 3));
-    console.log(output); // New output logged by manipulating an existing variable in a child scope
+    console.log('Line 34: ' + output); // New output logged by manipulating an existing variable in a child scope
   }
   printAge();
 
@@ -42,3 +42,66 @@ const firstName = 'Ello';
 calcAge(1991);
 // console.log(age);  // Will not work out here
 // printAge();  // Will not work out here either
+
+// Lesson 95: Hoisting and the TDZ in practice
+
+//Variable hoisting
+console.log('Line 49: ' + me); // <== Undefined
+// console.log(job);  <== Error
+// console.log(year);  <==Error
+
+var me = 'Jago';
+let job = 'teacher';
+const year = 1991;
+
+// Function hoisting
+
+console.log('Line 59: ' + addDecl(2, 3)); // Returned 5
+// console.log(addExpr(2, 3)); // Error: Cannot access before initialization
+// console.log(addArrow(2, 3)); // Error: Cannot access before initialization
+console.log('Line 62: ' + addArrow); // Error: Undefined (declared as a var)
+
+function addDecl(a, b) {
+  return a + b;
+}
+
+// Using const
+/*const addExpr = function (a, b) {
+  // This function is now a const variable so it is in the TDZ
+  // We are assigning a function value to a variable, and const is block scoped
+  return a + b;
+};
+
+const addArrow = (a, b) => a + b;
+*/
+
+// Using var
+const addExpr = function (a, b) {
+  // This function is now a var variable so...
+  // We are assigning a function value to a variable, and var is function scoped
+  return a + b;
+};
+
+var addArrow = (a, b) => a + b;
+
+// Example: Why we shouldn't use var
+if (!numProducts) deleteShoppingCart();
+
+var numProducts = 10;
+
+function deleteShoppingCart() {
+  console.log('All products deleted!');
+}
+// We get all products deleted even though numProducts = 10
+// This happens because of hoisting
+// numProducts was hoisted to undefined at the time it was called, so it held no value and the shopping cart was deleted
+// Undefined is a falsey value, so the function will still execute
+
+// Another example:
+var x = 1;
+let y = 2;
+const z = 3;
+
+console.log(x === window.x); // True
+console.log(y === window.y); // False
+console.log(z === window.z); // False
