@@ -2,6 +2,7 @@
 
 // Scoping in practice
 // Global scope
+/*
 function calcAge(birthYear) {
   const age = 2037 - birthYear;
   console.log(firstName);
@@ -40,13 +41,14 @@ function calcAge(birthYear) {
 
 const firstName = 'Ello';
 calcAge(1991);
+*/
 // console.log(age);  // Will not work out here
 // printAge();  // Will not work out here either
 
 // Lesson 95: Hoisting and the TDZ in practice
 
 //Variable hoisting
-console.log('Line 49: ' + me); // <== Undefined
+// console.log('Line 49: ' + me); // <== Undefined
 // console.log(job);  <== Error
 // console.log(year);  <==Error
 
@@ -56,10 +58,10 @@ const year = 1991;
 
 // Function hoisting
 
-console.log('Line 59: ' + addDecl(2, 3)); // Returned 5
+// console.log('Line 59: ' + addDecl(2, 3)); // Returned 5
 // console.log(addExpr(2, 3)); // Error: Cannot access before initialization
 // console.log(addArrow(2, 3)); // Error: Cannot access before initialization
-console.log('Line 62: ' + addArrow); // Error: Undefined (declared as a var)
+// console.log('Line 62: ' + addArrow); // Error: Undefined (declared as a var)
 
 function addDecl(a, b) {
   return a + b;
@@ -90,7 +92,7 @@ if (!numProducts) deleteShoppingCart();
 var numProducts = 10;
 
 function deleteShoppingCart() {
-  console.log('All products deleted!');
+  // console.log('All products deleted!');
 }
 // We get all products deleted even though numProducts = 10
 // This happens because of hoisting
@@ -102,6 +104,55 @@ var x = 1;
 let y = 2;
 const z = 3;
 
-console.log(x === window.x); // True
-console.log(y === window.y); // False
-console.log(z === window.z); // False
+// console.log(x === window.x); // True
+// console.log(y === window.y); // False
+// console.log(z === window.z); // False
+
+// 97: The this keyword
+// Outside any function - global scoped
+// console.log(this);
+
+// Inside a function
+const calcAge = function (birthYear) {
+  // console.log(2037 - birthYear);
+  // console.log(this);  // Undefined
+};
+calcAge(1991);
+
+// Inside an arrow function
+const calcAgeArrow = birthYear => {
+  // console.log(2037 - birthYear);
+  // console.log(this);
+};
+calcAgeArrow(1991);
+
+// Inside a method
+const jago = {
+  year: 1991,
+  calcAge: function () {
+    console.log(this);
+    console.log(2037 - this.year);
+  },
+};
+jago.calcAge(); // Points at the object calling the method, not the object in which we wrote the method
+
+// Another example
+// Method borrowing
+
+const matilda = {
+  year: 2017,
+};
+
+matilda.calcAge = jago.calcAge;
+
+matilda.calcAge();
+
+// We can copy this function into the variable f because a function is just a value
+const f = jago.calcAge;
+
+// But we cannot use it without the this keyword
+
+f(); // Cannot read, property 'year' undefined at calcAge...
+// this f is now a regular function call and not attached to any object
+
+// 98: Regular functions vs arrow functions
