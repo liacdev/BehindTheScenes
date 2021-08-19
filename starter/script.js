@@ -78,13 +78,13 @@ const addArrow = (a, b) => a + b;
 */
 
 // Using var
-const addExpr = function (a, b) {
-  // This function is now a var variable so...
-  // We are assigning a function value to a variable, and var is function scoped
-  return a + b;
-};
+// const addExpr = function (a, b) {
+//   // This function is now a var variable so...
+//   // We are assigning a function value to a variable, and var is function scoped
+//   return a + b;
+// };
 
-var addArrow = (a, b) => a + b;
+// var addArrow = (a, b) => a + b;
 
 // Example: Why we shouldn't use var
 if (!numProducts) deleteShoppingCart();
@@ -114,8 +114,8 @@ const z = 3;
 
 // Inside a function
 const calcAge = function (birthYear) {
-  // console.log(2037 - birthYear);
-  // console.log(this);  // Undefined
+  console.log(2037 - birthYear);
+  console.log(this); // Undefined
 };
 calcAge(1991);
 
@@ -126,15 +126,17 @@ const calcAgeArrow = birthYear => {
 };
 calcAgeArrow(1991);
 
-// Inside a method
+// Using a method
+/*
 const jago = {
   year: 1991,
-  calcAge: function () {
+  calcAge() {
     console.log(this);
     console.log(2037 - this.year);
   },
 };
-jago.calcAge(); // Points at the object calling the method, not the object in which we wrote the method
+*/
+// jago.calcAge(); // Points at the object calling the method, not the object in which we wrote the method
 
 // Another example
 // Method borrowing
@@ -143,16 +145,83 @@ const matilda = {
   year: 2017,
 };
 
-matilda.calcAge = jago.calcAge;
+// matilda.calcAge = jago.calcAge;
 
-matilda.calcAge();
+// matilda.calcAge();
 
 // We can copy this function into the variable f because a function is just a value
-const f = jago.calcAge;
+// const f = jago.calcAge;
 
 // But we cannot use it without the this keyword
 
-f(); // Cannot read, property 'year' undefined at calcAge...
+// f(); // Cannot read, property 'year' undefined at calcAge...
 // this f is now a regular function call and not attached to any object
 
 // 98: Regular functions vs arrow functions
+
+// Variables declared with var create properties on the global object and can introduce bugs
+var firstName = 'Matilda';
+
+// Using the object from before
+const jago = {
+  firstName: 'Jago',
+  year: 1991,
+  calcAge() {
+    console.log(this);
+    console.log(2037 - this.year);
+
+    /*
+    // Solution 1
+    const self = this;
+    const isMillennial = function () {
+      console.log(this); // Undefined
+      // console.log(this.year >= 1981 && this.year <= 1996); // <--Causes our problem cannot read property 'year' of undefined below
+      console.log(self); // Using self
+      console.log(self.year >= 1981 && self.year <= 1996); // <--Using self
+    };
+    */
+
+    // Solution 2
+    const isMillennial = () => {
+      console.log(this); // Arrow functions don't get a this keyword, so this this is referencing the jago object
+      console.log(this.year >= 1981 && this.year <= 1996); // <--Using self
+    };
+
+    isMillennial(); // Called later as we call the calcAge function
+  },
+
+  greet: () => {
+    console.log(this);
+    console.log(`Hey ${this.firstName}`);
+  },
+};
+
+// Before declaring var, these lines were undefined
+// After declaring var, these lines are defined as 'Matilda'
+
+jago.greet(); // Hey undefined
+// An arrow function DOES NOT get its own this keyword
+// It will use the parent scope this keyword
+console.log(this.firstName); // Also undefined
+
+// So, as a best practice, never use an arrow function as a method!
+
+// Another problem is when we have a function inside a method
+//  Error: Cannot read property 'year' of undefined
+jago.calcAge();
+
+// Arguments keyword
+//  This is useful when we need a function to accept more parameters than specified
+const addExpr = function (a, b) {
+  console.log(arguments);
+  return a + b;
+};
+addExpr(2, 5);
+addExpr(2, 5, 8, 12);
+
+var addArrow = (a, b) => {
+  console.log(arguments);
+  return a + b;
+};
+addArrow(2, 5, 8); // Error: arguments is not defined at addArrow
+// Argument does not exist in an arrow function
