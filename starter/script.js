@@ -52,9 +52,9 @@ calcAge(1991);
 // console.log(job);  <== Error
 // console.log(year);  <==Error
 
-var me = 'Jago';
-let job = 'teacher';
-const year = 1991;
+// var me = 'Jago';
+// let job = 'teacher';
+// const year = 1991;
 
 // Function hoisting
 
@@ -63,9 +63,9 @@ const year = 1991;
 // console.log(addArrow(2, 3)); // Error: Cannot access before initialization
 // console.log('Line 62: ' + addArrow); // Error: Undefined (declared as a var)
 
-function addDecl(a, b) {
-  return a + b;
-}
+// function addDecl(a, b) {
+//   return a + b;
+// }
 
 // Using const
 /*const addExpr = function (a, b) {
@@ -87,22 +87,22 @@ const addArrow = (a, b) => a + b;
 // var addArrow = (a, b) => a + b;
 
 // Example: Why we shouldn't use var
-if (!numProducts) deleteShoppingCart();
+// if (!numProducts) deleteShoppingCart();
 
-var numProducts = 10;
+// var numProducts = 10;
 
-function deleteShoppingCart() {
-  // console.log('All products deleted!');
-}
+// function deleteShoppingCart() {
+//   // console.log('All products deleted!');
+// }
 // We get all products deleted even though numProducts = 10
 // This happens because of hoisting
 // numProducts was hoisted to undefined at the time it was called, so it held no value and the shopping cart was deleted
 // Undefined is a falsey value, so the function will still execute
 
 // Another example:
-var x = 1;
-let y = 2;
-const z = 3;
+// var x = 1;
+// let y = 2;
+// const z = 3;
 
 // console.log(x === window.x); // True
 // console.log(y === window.y); // False
@@ -113,18 +113,18 @@ const z = 3;
 // console.log(this);
 
 // Inside a function
-const calcAge = function (birthYear) {
-  console.log(2037 - birthYear);
-  console.log(this); // Undefined
-};
-calcAge(1991);
+// const calcAge = function (birthYear) {
+//   console.log(2037 - birthYear);
+//   console.log(this); // Undefined
+// };
+// calcAge(1991);
 
 // Inside an arrow function
-const calcAgeArrow = birthYear => {
-  // console.log(2037 - birthYear);
-  // console.log(this);
-};
-calcAgeArrow(1991);
+// const calcAgeArrow = birthYear => {
+//   // console.log(2037 - birthYear);
+//   // console.log(this);
+// };
+// calcAgeArrow(1991);
 
 // Using a method
 /*
@@ -141,9 +141,9 @@ const jago = {
 // Another example
 // Method borrowing
 
-const matilda = {
-  year: 2017,
-};
+// const matilda = {
+//   year: 2017,
+// };
 
 // matilda.calcAge = jago.calcAge;
 
@@ -160,68 +160,88 @@ const matilda = {
 // 98: Regular functions vs arrow functions
 
 // Variables declared with var create properties on the global object and can introduce bugs
-var firstName = 'Matilda';
+// var firstName = 'Matilda';
 
 // Using the object from before
-const jago = {
-  firstName: 'Jago',
-  year: 1991,
-  calcAge() {
-    console.log(this);
-    console.log(2037 - this.year);
+// const jago = {
+//   firstName: 'Jago',
+//   year: 1991,
+//   calcAge() {
+//     console.log(this);
+//     console.log(2037 - this.year);
 
-    /*
-    // Solution 1
-    const self = this;
-    const isMillennial = function () {
-      console.log(this); // Undefined
-      // console.log(this.year >= 1981 && this.year <= 1996); // <--Causes our problem cannot read property 'year' of undefined below
-      console.log(self); // Using self
-      console.log(self.year >= 1981 && self.year <= 1996); // <--Using self
-    };
-    */
+//     /*
+//     // Solution 1
+//     const self = this;
+//     const isMillennial = function () {
+//       console.log(this); // Undefined
+//       // console.log(this.year >= 1981 && this.year <= 1996); // <--Causes our problem cannot read property 'year' of undefined below
+//       console.log(self); // Using self
+//       console.log(self.year >= 1981 && self.year <= 1996); // <--Using self
+//     };
+//     */
 
-    // Solution 2
-    const isMillennial = () => {
-      console.log(this); // Arrow functions don't get a this keyword, so this this is referencing the jago object
-      console.log(this.year >= 1981 && this.year <= 1996); // <--Using self
-    };
+//     // Solution 2
+//     // const isMillennial = () => {
+//     //   console.log(this); // Arrow functions don't get a this keyword, so this this is referencing the jago object
+//     //   console.log(this.year >= 1981 && this.year <= 1996); // <--Using self
+//     // };
 
-    isMillennial(); // Called later as we call the calcAge function
-  },
+//   //   isMillennial(); // Called later as we call the calcAge function
+//   // },
 
-  greet: () => {
-    console.log(this);
-    console.log(`Hey ${this.firstName}`);
-  },
-};
+//   // greet: () => {
+//   //   console.log(this);
+//   //   console.log(`Hey ${this.firstName}`);
+//   // },
+// };
 
 // Before declaring var, these lines were undefined
 // After declaring var, these lines are defined as 'Matilda'
 
-jago.greet(); // Hey undefined
+// jago.greet(); // Hey undefined
 // An arrow function DOES NOT get its own this keyword
 // It will use the parent scope this keyword
-console.log(this.firstName); // Also undefined
+// console.log(this.firstName); // Also undefined
 
 // So, as a best practice, never use an arrow function as a method!
 
 // Another problem is when we have a function inside a method
 //  Error: Cannot read property 'year' of undefined
-jago.calcAge();
+// jago.calcAge();
 
 // Arguments keyword
 //  This is useful when we need a function to accept more parameters than specified
-const addExpr = function (a, b) {
-  console.log(arguments);
-  return a + b;
-};
-addExpr(2, 5);
-addExpr(2, 5, 8, 12);
+// const addExpr = function (a, b) {
+//   console.log(arguments);
+//   return a + b;
+// };
+// addExpr(2, 5);
+// addExpr(2, 5, 8, 12);
 
-var addArrow = (a, b) => {
-  console.log(arguments);
-  return a + b;
-};
-addArrow(2, 5, 8); // Error: arguments is not defined at addArrow
+// var addArrow = (a, b) => {
+//   console.log(arguments);
+//   return a + b;
+// };
+// addArrow(2, 5, 8); // Error: arguments is not defined at addArrow
 // Argument does not exist in an arrow function
+
+// 99: Primitives vs Objects
+// Everything here works as expected
+// let age = 30;
+// let oldAge = age;
+// age = 31;
+// console.log(age);
+// console.log(oldAge);
+
+// const me = {
+//   name: 'jago',
+//   age: 46,
+// };
+
+// const friend = me;
+// friend.age = 4;
+// console.log('Friend:', friend);
+// console.log('me:', me);
+
+// 100: Primitives vs Objects in practice:
