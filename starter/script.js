@@ -245,3 +245,42 @@ const jago = {
 // console.log('me:', me);
 
 // 100: Primitives vs Objects in practice:
+
+// Primitive types
+let lastName = 'Williams';
+let oldLastName = lastName;
+lastName = 'Davis';
+console.log(lastName, oldLastName);
+
+// Reference types
+const jessica = {
+  firstName: 'Jessica',
+  lastName: 'Williams',
+  age: 27,
+};
+
+const marriedJessica = jessica;
+marriedJessica.lastName = 'Davis';
+console.log('Before married: ', jessica);
+console.log('After married:', marriedJessica);
+
+// marriedJessica = {};  This won't work!
+
+// Copying objects
+const jessica2 = {
+  firstName: 'Jessica',
+  lastName: 'Williams',
+  age: 27,
+  family: ['Alice', 'Bob'],
+};
+
+const jessicaCopy = Object.assign({}, jessica2);
+console.log('Jessica2: ', jessica2);
+console.log('JessicaCopy: ', jessicaCopy);
+jessicaCopy.lastName = 'Davis';
+console.log('JessicaCopy: ', jessicaCopy);
+console.log(jessica2.family);
+jessicaCopy.family.push('Mary');
+jessicaCopy.family.push('John');
+console.log(jessica2);
+console.log(jessicaCopy);
